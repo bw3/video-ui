@@ -4,15 +4,7 @@ import Mpv 1.0
 
 Item {
     property string uri;
-    property string headerText: adjust_proj.isFinished;
-
-    Process {
-        id: adjust_proj
-    }
-
-    Process {
-        id: adjust_inputs
-    }
+    property string headerText: "Adjusting ..."
 
     Mpv {
         id: mpv
@@ -32,15 +24,13 @@ Item {
                 print(request.response)
                 request.responseType = "json";
                 //"color_space":1,"filesize":"5.57 GB","fps":"23.976","lens_memory":1
-                let res = "3840x2160";
-                let rate = request.response["fps"];
-                let lens_mem = request.response["lens_memory"];
-                let settings_mem = lens_mem;
-                let color_space = request.response["color_space"];               
-                adjust_proj.start(".config/video-ui/adjust_projector",[ res, rate, lens_mem, settings_mem, color_space ]);
-                adjust_inputs.start(".config/video-ui/adjust_inputs", ["1"]);
-                adjust_proj.waitForFinished();
-                adjust_inputs.waitForFinished();
+                adjust.resolution = "3840x2160";
+                adjust.refreshRate = request.response["fps"];
+                adjust.lensMemory = request.response["lens_memory"];
+                adjust.settingsMemory = request.response["settings_memory"];
+                adjust.colorSpace = request.response["color_space"];
+                adjust.input = 1
+                adjust.running = true;
                 appWindow.visible = false;
                 mpv.init();
                 request.response["profile"].forEach(function (item) {
@@ -49,6 +39,8 @@ Item {
                 mpv.cmd("loadfile " + uri +"/data");
                 mpv.waitForExit();
                 appWindow.visible = true;
+                adjust.colorSpace = 1;
+                adjust.running = true;
                 stack.pop();
             }
             request.send();

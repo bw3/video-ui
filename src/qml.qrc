@@ -10,5 +10,6 @@
 <file>VideoFileMenu.qml</file>
 <file>PlayVideo.qml</file>
 <file>PlayGames.qml</file>
+<file>Adjust.qml</file>
 </qresource>
 </RCC>

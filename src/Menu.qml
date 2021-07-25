@@ -7,7 +7,9 @@ ListView {
         stack.pop()
     }
     focus: true
-    highlight: Rectangle { color: "brown"; radius: 2 }
+    highlight: Rectangle { color: "blue"; radius: 5 }
+    highlightMoveDuration: 50
+    highlightResizeDuration: 50
     clip: true
     model: ListModel {
         ListElement {
@@ -17,7 +19,7 @@ ListView {
     delegate: Text {
         text: name
         color: "white"
-        font.pointSize: appWindow.width / 45
+        font.pointSize: appWindow.width / 50
         wrapMode: Text.WrapAnywhere
         MouseArea {
             anchors.fill: parent

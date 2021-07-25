@@ -5,21 +5,16 @@ Item {
 
     property string headerText: "Games";
 
-    Process {
-        id: adjust_inputs
-    }
-
-
     Component.onCompleted: {
-        adjust_inputs.start(".config/video-ui/adjust_inputs", ["2"]);
+        adjust.input = 2;
+        adjust.running = true;
     }
 
     Keys.onPressed: {
         if(event.key == Qt.Key_Back || event.key == Qt.Key_Escape) {
             stack.pop();
-            adjust_inputs.waitForFinished();
-            adjust_inputs.start(".config/video-ui/adjust_inputs", ["2"]);
-            adjust_inputs.waitForFinished();
+            adjust.input = 1;
+            adjust.running = true;
             event.accepted = true;
         }
     }
