@@ -1,5 +1,14 @@
 <RCC>
 <qresource prefix="/">
 <file>main.qml</file>
+<file>Menu.qml</file>
+<file>RootMenu.qml</file>
+<file>TvShowMenu.qml</file>
+<file>TvSeasonMenu.qml</file>
+<file>TvEpisodeMenu.qml</file>
+<file>MovieMenu.qml</file>
+<file>VideoFileMenu.qml</file>
+<file>PlayVideo.qml</file>
+<file>PlayGames.qml</file>
 </qresource>
 </RCC>
