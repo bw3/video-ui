@@ -29,6 +29,10 @@ public:
         return m_finished;
     }
 
+    Q_INVOKABLE QString readAllStandardOutput() {
+        return QProcess::readAllStandardOutput();
+    }
+
     Q_INVOKABLE bool waitForFinished(int msecs = 30000) {
         return QProcess::waitForFinished(msecs);
     }

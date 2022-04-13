@@ -11,5 +11,7 @@
 <file>PlayVideo.qml</file>
 <file>PlayGames.qml</file>
 <file>Adjust.qml</file>
+<file>Youtube.qml</file>
+<file>YoutubeResults.qml</file>
 </qresource>
 </RCC>

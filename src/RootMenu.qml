@@ -21,5 +21,11 @@ Menu {
                 stack.push('PlayGames.qml');
             }
         }
+        ListElement {
+            name: "Youtube"
+            action: function action() {
+                stack.push('Youtube.qml');
+            }
+        }
     }
 }

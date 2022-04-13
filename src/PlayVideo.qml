@@ -4,6 +4,7 @@ import Mpv 1.0
 
 Item {
     property string uri;
+    property bool getInfo: true;
     property string headerText: "Adjusting ..."
 
     Mpv {
@@ -18,9 +19,12 @@ Item {
         interval: 1
         repeat: false
         onTriggered: {
-        var request = new XMLHttpRequest();
-            request.open("GET", uri + "/info");
-            request.onload = function()  {
+            var profiles = ["refresh-60","aspect-1.78","colorspace-BT709"];
+            if(getInfo) {
+                var request = new XMLHttpRequest();
+                request.timeout = 4000;
+                request.open("GET", uri + "/info", false);
+                request.send();
                 print(request.response)
                 request.responseType = "json";
                 //"color_space":1,"filesize":"5.57 GB","fps":"23.976","lens_memory":1
@@ -29,21 +33,28 @@ Item {
                 adjust.lensMemory = request.response["lens_memory"];
                 adjust.settingsMemory = request.response["settings_memory"];
                 adjust.colorSpace = request.response["color_space"];
-                adjust.input = 1
-                adjust.running = true;
-                appWindow.visible = false;
-                mpv.init();
-                request.response["profile"].forEach(function (item) {
-                    mpv.cmd("apply-profile " + item);
-                });
-                mpv.cmd("loadfile " + uri +"/data");
-                mpv.waitForExit();
-                appWindow.visible = true;
+                profiles = request.response["profile"];
+            } else {
+                adjust.resolution = "3840x2160";
+                adjust.refreshRate = 60;
+                adjust.lensMemory = 1;
+                adjust.settingsMemory = 1;
                 adjust.colorSpace = 1;
-                adjust.running = true;
-                stack.pop();
             }
-            request.send();
+            adjust.input = 1
+            adjust.running = true;
+            appWindow.visible = false;
+            mpv.init();
+            profiles.forEach(function (item) {
+                mpv.cmd("apply-profile " + item);
+            });
+            mpv.cmd("loadfile " + uri +"/data");
+            mpv.waitForExit();
+            appWindow.visible = true;
+            adjust.colorSpace = 1;
+            adjust.running = true;
+            stack.pop();
+
         }
     }
 
